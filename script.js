@@ -2,8 +2,8 @@ const danhSach = [
     "Tiger I",
     "Tiger II (King Tiger)",
     "Panther",
-    "Panzer IV",
     "Panzer III",
+    "Panzer IV",
     "StuG III",
     "Jagdpanther",
     "JagdTiger",
@@ -54,9 +54,10 @@ const danhSach = [
 const soMucMoiTrang = 10;
 const tongTrang = Math.ceil(danhSach.length / soMucMoiTrang);
 
-function hienThiTrang(trang) {
+const list = document.getElementById("list");
+const pagination = document.getElementById("pagination");
 
-    const list = document.getElementById("list");
+function hienThiTrang(trang) {
     list.innerHTML = "";
 
     const batDau = (trang - 1) * soMucMoiTrang;
@@ -68,20 +69,21 @@ function hienThiTrang(trang) {
         list.appendChild(li);
     }
 
-    const tatCaNut = document.querySelectorAll("#pagination button");
-    tatCaNut.forEach(btn => btn.classList.remove("active"));
-    tatCaNut[trang - 1].classList.add("active");
-}
+    document.querySelectorAll("#pagination button").forEach(btn => {
+        btn.classList.remove("active");
+    });
 
-const pagination = document.getElementById("pagination");
+    document.getElementById("page" + trang).classList.add("active");
+}
 
 for (let i = 1; i <= tongTrang; i++) {
     const btn = document.createElement("button");
+    btn.id = "page" + i;
     btn.textContent = i;
 
-    btn.onclick = function () {
+    btn.addEventListener("click", function () {
         hienThiTrang(i);
-    };
+    });
 
     pagination.appendChild(btn);
 }
